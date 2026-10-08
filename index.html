@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="data:," />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <title>John — Graphic Designer</title>
+  <style>
+    :root{
+      color-scheme:light dark;
+      --paper:#fff;--ink:#111;--muted:#696969;--line:#d9d9d5;--soft:#f3f3f0;--accent:#d74a2c;--accent-ink:#fff;
+      --pad:clamp(20px,4.1vw,68px);--sans:"DM Sans",sans-serif;--mono:"IBM Plex Mono",monospace;
+    }
+    @media(prefers-color-scheme:dark){:root{--paper:#111210;--ink:#f5f5f0;--muted:#a7a7a0;--line:#393a36;--soft:#1c1d1a;--accent:#ef6a4a;--accent-ink:#111;}}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.45}
+    button,a{font:inherit}
+    button{color:inherit}
+    img{display:block;width:100%;height:auto;background:var(--soft)}
+    .site-nav{display:flex;justify-content:space-between;align-items:center;padding:24px var(--pad);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 94%,transparent)}
+    .identity{border:0;background:none;padding:0;text-align:left;cursor:pointer;color:var(--ink)}
+    .logo-wordmark{display:inline-flex;align-items:center;min-height:33px;font:500 17px/1 var(--sans);letter-spacing:-.04em;text-transform:uppercase;border:1px solid var(--ink);padding:7px 10px 6px}
+    .nav-links{display:flex;gap:clamp(18px,3vw,44px)}
+    .nav-link{border:0;background:none;padding:4px 0;cursor:pointer;color:var(--muted);position:relative}
+    .nav-link::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;background:var(--ink);transition:right .25s ease}
+    .nav-link:hover,.nav-link.active{color:var(--ink)}
+    .nav-link.active::after{right:0}
+    main{min-height:calc(100vh - 110px)}
+    .view{display:none}
+    .view.active{display:block}
+    .intro{padding:clamp(54px,8vw,116px) var(--pad) clamp(44px,7vw,92px);display:grid;grid-template-columns:minmax(0,1.5fr) minmax(230px,.5fr);gap:40px;align-items:end}
+    .intro h1{margin:0;font-size:clamp(40px,7.1vw,112px);line-height:.92;letter-spacing:-.07em;font-weight:500;max-width:1100px}
+    .intro-copy{margin:0 0 4px;max-width:330px;color:var(--muted);font-size:17px}
+    .work-head{display:flex;justify-content:space-between;align-items:flex-end;padding:0 var(--pad) 18px;border-bottom:1px solid var(--line)}
+    .section-title{margin:0;font-size:16px;font-weight:500}
+    .index{font:12px var(--mono);color:var(--muted)}
+    .work-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(10px,2vw,30px);padding:clamp(18px,2vw,30px) var(--pad) clamp(54px,7vw,100px)}
+    .project{grid-column:span 6;border:0;background:none;padding:0;text-align:left;cursor:pointer;margin-bottom:clamp(20px,4vw,68px)}
+    .project:nth-child(1){grid-column:span 7}.project:nth-child(2){grid-column:span 5}.project:nth-child(3){grid-column:span 12}
+    .project:nth-child(3) .project-media{aspect-ratio:16/8.5}
+    .project-media{display:block;overflow:hidden;aspect-ratio:4/3;background:var(--soft)}
+    .project img{width:100%;height:100%;object-fit:cover;transition:transform .45s cubic-bezier(.2,.7,.3,1)}
+    .project:hover img,.secondary-project:hover img{transform:scale(1.015)}
+    .project-meta{display:grid;grid-template-columns:1fr auto;gap:16px;padding-top:12px}
+    .project h2{margin:0;font-size:clamp(19px,2vw,28px);font-weight:500;letter-spacing:-.03em}
+    .project p{margin:3px 0 0;color:var(--muted);font-size:14px}
+    .arrow{font-family:var(--mono);font-size:18px;transition:transform .2s}.project:hover .arrow{transform:translate(4px,-4px)}
+    .gallery-section{padding-bottom:clamp(70px,9vw,140px)}
+    .gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(8px,1.25vw,20px);padding:clamp(18px,2vw,30px) var(--pad) 0}
+    .secondary-project{border:0;background:none;padding:0;cursor:pointer;overflow:hidden;aspect-ratio:1;text-align:left}
+    .secondary-project img{width:100%;height:100%;object-fit:cover;transition:transform .45s cubic-bezier(.2,.7,.3,1)}
+    .page{padding:clamp(50px,8vw,112px) var(--pad) 110px}
+    .page-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:28px}
+    .page h1{grid-column:1/span 8;margin:0;font-size:clamp(52px,9vw,138px);line-height:.9;letter-spacing:-.075em;font-weight:500}
+    .page .lede{grid-column:7/span 5;margin:clamp(60px,8vw,110px) 0 0;font-size:clamp(22px,2.8vw,42px);line-height:1.13;letter-spacing:-.04em}
+    .about-portrait{grid-column:1/span 5;grid-row:2/span 2;margin:clamp(60px,8vw,110px) 0 0;aspect-ratio:4/5;background:var(--soft);overflow:hidden}
+    .portrait-placeholder{width:100%;height:100%;display:grid;place-items:center;align-content:center;gap:18px;color:var(--muted);border:1px solid var(--line)}
+    .portrait-placeholder strong{font-size:clamp(72px,10vw,150px);font-weight:500;line-height:.8;letter-spacing:-.08em;color:var(--ink)}
+    .portrait-placeholder small{font:10px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+    .about-details{grid-column:7/span 5;margin-top:68px;display:grid;grid-template-columns:1fr 1fr;gap:30px;padding-top:20px;border-top:1px solid var(--line)}
+    .detail h2{font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.08em;margin:0 0 12px;color:var(--muted)}
+    .detail p{margin:0}
+    .contact-layout{max-width:1200px}.contact-layout h1{font-size:clamp(54px,8vw,118px)}
+    .contact-action{grid-column:7/span 5;margin-top:70px;border-top:1px solid var(--line);padding-top:22px}
+    .contact-action>p{margin:0 0 32px;color:var(--muted);max-width:460px;font-size:18px}
+    .contact-form{display:grid;gap:22px}
+    .form-field{display:grid;gap:8px}
+    .form-field label{font:500 10px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+    .form-field input,.form-field textarea{width:100%;border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent;color:var(--ink);font:inherit;font-size:17px;padding:10px 0 12px;outline:none}
+    .form-field textarea{min-height:120px;resize:vertical}
+    .form-field input:focus,.form-field textarea:focus{border-color:var(--ink)}
+    .form-field input::placeholder,.form-field textarea::placeholder{color:var(--muted);opacity:.75}
+    .contact-submit{justify-self:start;border:0;background:var(--ink);color:var(--paper);padding:13px 18px;cursor:pointer;font-weight:500;margin-top:2px}
+    .contact-submit:hover{background:var(--accent);color:var(--accent-ink)}
+    .contact-note{font:11px/1.5 var(--mono)!important;margin:18px 0 0!important;color:var(--muted)!important}
+    .case{padding-bottom:100px}
+    .case-top{padding:40px var(--pad) 26px;border-bottom:1px solid var(--line)}
+    .back{border:0;background:none;padding:0 0 3px;border-bottom:1px solid var(--ink);cursor:pointer;font-size:14px}
+    .case-title-row{display:grid;grid-template-columns:2fr 1fr;gap:40px;align-items:end;margin-top:clamp(50px,8vw,110px)}
+    .case h1{margin:0;font-size:clamp(48px,8.5vw,132px);line-height:.9;letter-spacing:-.075em;font-weight:500}
+    .case-intro{margin:0;color:var(--muted);max-width:410px;font-size:18px}
+    .case-hero{padding:clamp(18px,3vw,48px) var(--pad)}
+    .case-hero img{height:auto;object-fit:contain}
+    .case-body{display:grid;grid-template-columns:repeat(12,1fr);gap:28px;padding:clamp(40px,6vw,90px) var(--pad)}
+    .case-statement{grid-column:1/span 6;margin:0;font-size:clamp(29px,4.2vw,62px);line-height:1.05;letter-spacing:-.045em}
+    .case-body.is-empty{display:none}
+    .case-info{grid-column:8/span 4}
+    .case-section{padding:0 0 22px;margin:0 0 22px;border-bottom:1px solid var(--line)}
+    .case-section:last-child{margin-bottom:26px}
+    .case-section h2{font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.08em;margin:0 0 10px;color:var(--muted)}
+    .case-section p{margin:0;color:var(--muted)}
+    .case-tags{display:flex;flex-wrap:wrap;gap:7px}.case-tags span{font:11px var(--mono);border:1px solid var(--line);padding:7px 9px}
+    .case-visuals{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(12px,2vw,30px);padding:0 var(--pad)}
+    .case-visuals img{width:100%;height:auto;object-fit:contain;background:var(--soft)}
+    .case-source{margin:22px var(--pad) 0;font-size:13px;color:var(--muted)}
+    .case-source a{color:var(--ink);text-underline-offset:3px}
+    footer{border-top:1px solid var(--line);padding:26px var(--pad) 34px;display:flex;justify-content:space-between;color:var(--muted);font-size:13px}
+    @media(max-width:760px){
+      .site-nav{align-items:center;padding-top:18px}.logo-wordmark{min-height:29px;font-size:14px;padding:6px 8px 5px}.nav-links{gap:16px}.nav-link{font-size:14px}
+      .intro{grid-template-columns:1fr;padding-top:48px;gap:30px}.intro h1{font-size:clamp(47px,15vw,72px)}.intro-copy{max-width:440px}
+      .project,.project:nth-child(1),.project:nth-child(2),.project:nth-child(3){grid-column:1/-1}.project{margin-bottom:28px}.project-media,.project:nth-child(3) .project-media{aspect-ratio:5/4}
+      .gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .page h1{grid-column:1/-1;font-size:clamp(56px,20vw,90px)}.about-portrait{grid-column:1/-1;grid-row:auto;margin-top:48px;aspect-ratio:4/5}.page .lede{grid-column:1/-1;margin-top:48px}.about-details,.contact-action{grid-column:1/-1;margin-top:48px}
+      .case-title-row{grid-template-columns:1fr}.case-intro{max-width:100%}.case-statement,.case-info{grid-column:1/-1}.case-info{margin-top:18px}
+    }
+    @media(max-width:460px){.nav-links{gap:12px}.nav-link{font-size:13px}.about-details{grid-template-columns:1fr}.site-nav{padding-left:16px;padding-right:16px}.identity{max-width:78px}.work-grid,.gallery-grid,.intro,.page,.case-top,.case-hero,.case-body,.case-visuals,footer,.work-head{padding-left:18px;padding-right:18px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.project img,.arrow{transition:none}}
+  </style>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Primary navigation">
+    <button class="identity" data-view="work" aria-label="John — home"><span class="logo-wordmark">John</span></button>
+    <div class="nav-links">
+      <button class="nav-link active" data-view="work">Work</button>
+      <button class="nav-link" data-view="about">About</button>
+      <button class="nav-link" data-view="contact">Contact</button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="view active" id="work" aria-labelledby="work-title">
+      <header class="intro">
+        <h1 id="work-title">Identity with a point of view.</h1>
+        <p class="intro-copy">Independent graphic design for organizations, events, and ideas worth moving forward.</p>
+      </header>
+      <div class="work-head"><p class="section-title">Selected case studies</p><span class="index">01—03</span></div>
+      <div class="work-grid">
+        <button class="project" data-project="beacon-rise">
+          <span class="project-media"><img src="assets/img0.webp" alt="Beacon Rise Fellowship brand guidelines on blue booklet covers"></span>
+          <span class="project-meta"><span><h2>Beacon Rise Fellowship</h2><p>Brand identity · Logo system</p></span><span class="arrow">↗</span></span>
+        </button>
+        <button class="project" data-project="intel">
+          <span class="project-media"><img src="assets/img1.webp" alt="Intel card game packaging and cards against a dark background"></span>
+          <span class="project-meta"><span><h2>Intel Card Game</h2><p>Game design · Packaging</p></span><span class="arrow">↗</span></span>
+        </button>
+        <button class="project" data-project="veterans">
+          <span class="project-media"><img src="assets/img2.png" alt="Veterans Marathon logo on a pale blue field"></span>
+          <span class="project-meta"><span><h2>Veterans Marathon</h2><p>Logo redesign · Event identity</p></span><span class="arrow">↗</span></span>
+        </button>
+      </div>
+      <section class="gallery-section" aria-labelledby="gallery-title">
+        <div class="work-head"><p class="section-title" id="gallery-title">More work</p><span class="index">04—12</span></div>
+        <div class="gallery-grid">
+          <button class="secondary-project" data-project="camp-brochure" aria-label="View Camp Brochure project"><img src="assets/img3.jpg" alt="Illustrated Camp Brochure cover in green and orange"></button>
+          <button class="secondary-project" data-project="turkey-bowl" aria-label="View Turkey Bowl Logo project"><img src="assets/img4.png" alt="Turkey Bowl logo on a dark red field"></button>
+          <button class="secondary-project" data-project="ultra-marathon" aria-label="View 50 Mile Ultra Marathon project"><img src="assets/img5.png" alt="Circular 50 Mile Ultra Marathon mark on an orange field"></button>
+          <button class="secondary-project" data-project="run-club" aria-label="View Rufenacht Run Club Logo project"><img src="assets/img6.png" alt="Rufenacht Run Club monogram on a coral field"></button>
+          <button class="secondary-project" data-project="harbor" aria-label="View Harbor Community Church Brand Identity project"><img src="assets/img7.jpg" alt="Harbor Community Church mark on a blue field"></button>
+          <button class="secondary-project" data-project="wwf" aria-label="View WWF Annual Report Redesign project"><img src="assets/img8.jpg" alt="WWF annual report redesign shown as a booklet spread"></button>
+          <button class="secondary-project" data-project="crossroads" aria-label="View Blessed Crossroads Brand Identity project"><img src="assets/img9.jpg" alt="Blessed Crossroads identity mark on a dark red field"></button>
+          <button class="secondary-project" data-project="connect" aria-label="View Connect Church Brand Identity project"><img src="assets/img10.jpg" alt="Connect Church logo on a dark blue field"></button>
+          <button class="secondary-project" data-project="jones" aria-label="View Jones Soda Vote Campaign project"><img src="assets/img11.jpg" alt="Colorful Jones Soda Vote Campaign bottle labels and graphics"></button>
+        </div>
+      </section>
+    </section>
+
+    <section class="view page" id="about" aria-labelledby="about-title">
+      <div class="page-grid">
+        <h1 id="about-title">Good work, made with purpose.</h1>
+        <figure class="about-portrait" aria-label="Portrait placeholder">
+          <div class="portrait-placeholder"><strong aria-hidden="true">J</strong><small>Portrait coming soon</small></div>
+        </figure>
+        <p class="lede">I’m John, a graphic designer focused on building clear, memorable identities for people doing meaningful work.</p>
+        <div class="about-details">
+          <div class="detail"><h2>Focus</h2><p>Brand identity<br>Campaigns<br>Print & digital</p></div>
+          <div class="detail"><h2>Interested in</h2><p>Churches<br>Race events<br>Mission-driven teams</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view page contact-layout" id="contact" aria-labelledby="contact-title">
+      <div class="page-grid">
+        <h1 id="contact-title">Have a project in mind?</h1>
+        <div class="contact-action">
+          <p>I’m available for select freelance identity, campaign, and event-design projects.</p>
+          <form class="contact-form" id="contact-form">
+            <div class="form-field">
+              <label for="contact-name">Name</label>
+              <input id="contact-name" name="name" type="text" autocomplete="name" placeholder="Your name" required>
+            </div>
+            <div class="form-field">
+              <label for="contact-email">Email</label>
+              <input id="contact-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+            </div>
+            <div class="form-field">
+              <label for="contact-message">What are you looking to create?</label>
+              <textarea id="contact-message" name="message" placeholder="Tell me a little about your project, timeline, and what you need." required></textarea>
+            </div>
+            <button class="contact-submit" type="submit">Start an email ↗</button>
+          </form>
+          <p class="contact-note">Opens your email app with the details filled in. Nothing is sent until you review and send it.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="view case" id="case-study" aria-live="polite">
+      <div class="case-top">
+        <button class="back" data-view="work">← Back to work</button>
+        <div class="case-title-row"><h1 id="case-title">Beacon Rise Fellowship</h1><p class="case-intro" id="case-intro"></p></div>
+      </div>
+      <div class="case-hero"><img id="case-image" src="assets/img12.webp" alt=""></div>
+      <div class="case-body" id="case-body">
+        <p class="case-statement" id="case-statement"></p>
+        <div class="case-info"><div id="case-sections"></div><div class="case-tags" id="case-tags"></div></div>
+      </div>
+      <div class="case-visuals" id="case-visuals" aria-label="Project visuals"></div>
+      <p class="case-source" id="case-source"></p>
+    </section>
+  </main>
+
+  <footer><span>Independent graphic designer</span><span>Available for select projects</span></footer>
+
+  <script>
+    (function(){
+      var data={
+        'beacon-rise':{
+          title:'Beacon Rise Fellowship Brand Identity',
+          intro:'A complete identity system translating a radiant mission into a beacon for community growth.',
+          statement:'From fifteen brand nouns to a flexible visual system.',
+          sections:[
+            {heading:'Challenge',body:'Translate Beacon Rise Fellowship’s mission into a distinctive identity that connects the symbolism of light with growth in the community.'},
+            {heading:'Process',body:'The exploration began with fifteen brand nouns, expanded into more than fifty rough sketches, and narrowed to ten vector directions. Four finalists were then developed as complete brand systems.'}
+          ],
+          tags:['Brand identity','Church','Logo design','Brand system','Illustrator'],slug:'beacon-rise',count:15,
+          source:'https://www.behance.net/gallery/184600047/Beacon-Rise-Fellowship-Brand-Identity',sourceLabel:'View the complete Behance project ↗'
+        },
+        intel:{
+          title:'Intel — The Strategic Spy Thriller Card Game',
+          intro:'A strategic spy card game developed from homemade tests into a produced, crowdfunded release.',
+          statement:'Game design, storytelling, packaging, and launch in one connected system.',
+          sections:[
+            {heading:'Origin',body:'John co-created Intel with longtime friends and led the visual design across the game, Kickstarter campaign, and social media.'},
+            {heading:'Prototypes',body:'Testing moved from cut paper cards to customized Uno cards and then to manufactured prototype decks, with the design and gameplay refined at each stage.'},
+            {heading:'Launch',body:'The finished game centers on tracking the Agent while sending other players off the trail. Its Kickstarter campaign reached full funding in less than 48 hours.'}
+          ],
+          tags:['Card game','Game design','Packaging','Illustration','Kickstarter'],slug:'intel',count:19,
+          source:'https://www.behance.net/gallery/119077929/Intel-The-Strategic-Spy-Thriller-Card-Game',sourceLabel:'View the complete Behance project ↗'
+        },
+        veterans:{
+          title:'Veterans Marathon',
+          intro:'A respectful redesign for a small-town Indiana race, preserving the history of the original while giving it more strength.',
+          statement:'A familiar race identity, tightened for greater impact.',
+          sections:[
+            {heading:'Context',body:'After running the Veterans Marathon in Columbia City, John saw a strong foundation in the existing identity and an opportunity to make it more confident.'},
+            {heading:'Refinement',body:'The five stars were realigned and strengthened, the script was replaced with a bolder sans serif, and red joined the blue-and-silver palette to complete the American color system.'},
+            {heading:'Exploration',body:'Alternate star concepts were tested before returning to a refined version of the original mark—more balanced, more durable, and still connected to the race’s history.'}
+          ],
+          tags:['Logo redesign','Marathon','Running','Event identity','Typography'],slug:'veterans',count:7,
+          source:'https://www.behance.net/gallery/220940007/Veterans-Marathon',sourceLabel:'View the complete Behance project ↗'
+        },
+        'camp-brochure':{
+          title:'Camp Brochure',
+          intro:'A print piece for a camp audience, built outside the usual boundaries of Brotherhood Mutual’s visual system.',
+          statement:'An outdoor-minded brochure with room to explore.',
+          sections:[
+            {heading:'Challenge',body:'Create an engaging brochure specifically for camp leaders while using the opportunity to move beyond the organization’s traditional design language.'},
+            {heading:'Visual direction',body:'National parks and rugged landscapes shaped the system: badge-inspired graphics, topographic textures, and an earthy palette tuned to an adventurous audience.'}
+          ],
+          tags:['Brochure','Print design','Camp','Outdoor','InDesign'],slug:'camp-brochure',count:7,
+          source:'https://www.behance.net/gallery/181996219/Camp-Brochure',sourceLabel:'View the complete Behance project ↗'
+        },
+        'turkey-bowl':{
+          title:'Turkey Bowl Logo',
+          intro:'A visual identity for a family football tradition more than sixty years in the making.',
+          statement:'Four generations, one field, and a mark built around the family tree.',
+          sections:[
+            {heading:'Tradition',body:'Every Thanksgiving morning, the extended family gathers at the family barn for a two-hand football game—a tradition carried on for more than six decades.'},
+            {heading:'Symbolism',body:'The mark combines a football with a tree as its laces. The tree references one beside the barn named for the family’s grandfather, while four branches represent the four generations that have kept the game alive.'},
+            {heading:'Applications',body:'The identity expands from the core mark into game-day gear and custom Turkey Bowl jerseys.'}
+          ],
+          tags:['Logo design','Thanksgiving','Football','Family tradition','Sports identity'],slug:'turkey-bowl',count:7,
+          source:'https://www.behance.net/gallery/188049281/Turkey-Bowl-Logo',sourceLabel:'View the complete Behance project ↗'
+        },
+        'ultra-marathon':{
+          title:'50 Mile Ultra Marathon',
+          intro:'A commemorative identity for a solo fifty-mile run, expanded into a full race-day system.',
+          statement:'A looping “50” built to carry the rhythm of the miles.',
+          sections:[
+            {heading:'Brief',body:'Create a distinctive “50” mark and a family of lockups that could live on shirts, flags, banners, decals, and other race-day pieces.'},
+            {heading:'Process',body:'The work moved from logo and badge sketches to vector exploration, then into typographic lockups and application-ready variations.'},
+            {heading:'Details',body:'The continuous forms of the five and zero echo repetitive mileage. The orange palette comes from the shirt and hat worn during the run.'}
+          ],
+          tags:['Ultra marathon','Running','Race identity','Logo design','Apparel'],slug:'ultra-marathon',count:8,
+          source:'https://www.behance.net/gallery/188566177/50-Mile-Ultra-Marathon',sourceLabel:'View the complete Behance project ↗'
+        },
+        'run-club':{
+          title:'Rufenacht Run Club Logo',
+          intro:'A compact identity for collegiate runners, designed first for a hat and then expanded into a wider system.',
+          statement:'A simple monogram with movement built into every stroke.',
+          sections:[
+            {heading:'Challenge',body:'Design a mark for John’s collegiate-running cousins that stays clear at small scale but can grow into a wordmark and badge lockup.'},
+            {heading:'Mark',body:'The top of the “R” suggests half of a running track, while the angled legs create a sense of speed.'}
+          ],
+          tags:['Run club','Logo design','Monogram','Track and field','Sports design'],slug:'run-club',count:6,
+          source:'https://www.behance.net/gallery/189871139/Rufenacht-Run-Club-Logo',sourceLabel:'View the complete Behance project ↗'
+        },
+        harbor:{
+          title:'Harbor Community Church Brand Identity',
+          intro:'A single-board identity presentation spanning the church mark and its practical applications.',
+          statement:'A church identity designed for community-facing use.',
+          sections:[],
+          tags:['Brand identity','Church','Campaign','Social media','Apparel'],slug:'harbor',count:1,
+          source:'https://www.behance.net/gallery/116733397/Harbor-Community-Church-Brand-Identity',sourceLabel:'View the Behance project ↗'
+        },
+        wwf:{
+          title:'WWF Annual Report Redesign',
+          intro:'An editorial redesign concept bringing wildlife imagery and structured reporting into a unified booklet.',
+          statement:'Clear editorial pacing across five report spreads.',
+          sections:[],
+          tags:['Annual report','Editorial design','Booklet','Layout','Wildlife'],slug:'wwf',count:5,
+          source:'https://www.behance.net/gallery/109445267/WWF-Annual-Report-Redesign',sourceLabel:'View the complete Behance project ↗'
+        },
+        crossroads:{
+          title:'Blessed Crossroads Brand Identity',
+          intro:'A single-board identity presentation for a Presbyterian church and ministry.',
+          statement:'A church brand shown across identity, apparel, and social applications.',
+          sections:[],
+          tags:['Brand identity','Church','Ministry','Logo design','Social media'],slug:'crossroads',count:1,
+          source:'https://www.behance.net/gallery/119518937/Blessed-Crossroads-Brand-Identity',sourceLabel:'View the Behance project ↗'
+        },
+        connect:{
+          title:'Connect Church Brand Identity',
+          intro:'A single-board identity presentation for a church, from core logo to social touchpoints.',
+          statement:'A connected visual system for ministry and communication.',
+          sections:[],
+          tags:['Art direction','Brand identity','Church','Logo design','Social media'],slug:'connect',count:1,
+          source:'https://www.behance.net/gallery/119174189/Connect-Church-Brand-Identity',sourceLabel:'View the Behance project ↗'
+        },
+        jones:{
+          title:'Jones Soda Vote Campaign',
+          intro:'A label redesign concept connecting the Jones Soda brand with an election-themed campaign.',
+          statement:'A colorful campaign carried from bottles to supporting graphics.',
+          sections:[],
+          tags:['Campaign','Packaging','Label design','Product design','Advertising'],slug:'jones',count:8,
+          source:'https://www.behance.net/gallery/107481863/Jones-Soda-Vote-Campaign',sourceLabel:'View the complete Behance project ↗'
+        }
+      };
+      var views=document.querySelectorAll('.view');
+      var navs=document.querySelectorAll('.nav-link');
+      function show(id){
+        views.forEach(function(v){v.classList.toggle('active',v.id===id)});
+        navs.forEach(function(n){n.classList.toggle('active',n.getAttribute('data-view')===id)});
+        window.scrollTo({top:0,behavior:'smooth'});
+      }
+      document.querySelectorAll('[data-view]').forEach(function(el){el.addEventListener('click',function(){show(el.getAttribute('data-view'))})});
+      document.querySelectorAll('[data-project]').forEach(function(el){el.addEventListener('click',function(){
+        var p=data[el.getAttribute('data-project')];
+        document.getElementById('case-title').textContent=p.title;
+        document.getElementById('case-intro').textContent=p.intro;
+        document.getElementById('case-statement').textContent=p.statement;
+        document.getElementById('case-sections').innerHTML=p.sections.map(function(section){return '<section class="case-section"><h2>'+section.heading+'</h2><p>'+section.body+'</p></section>'}).join('');
+        var firstImage='assets/behance/full/'+p.slug+'/01.webp';
+        document.getElementById('case-image').src=firstImage;
+        document.getElementById('case-image').alt=p.title+' — opening project visual';
+        document.getElementById('case-tags').innerHTML=p.tags.map(function(t){return '<span>'+t+'</span>'}).join('');
+        document.getElementById('case-body').classList.toggle('is-empty',!p.statement&&!p.sections.length&&!p.tags.length);
+        var visuals=[];
+        for(var i=2;i<=p.count;i++){visuals.push({src:'assets/behance/full/'+p.slug+'/'+String(i).padStart(2,'0')+'.webp',alt:p.title+' — project visual '+i+' of '+p.count})}
+        document.getElementById('case-visuals').innerHTML=visuals.map(function(v){return '<img loading="lazy" src="'+v.src+'" alt="'+v.alt+'">'}).join('');
+        document.getElementById('case-source').innerHTML=p.source?'<a href="'+p.source+'" target="_blank" rel="noopener noreferrer">'+p.sourceLabel+'</a>':'';
+        show('case-study');
+      })});
+      document.getElementById('contact-form').addEventListener('submit',function(event){
+        event.preventDefault();
+        var name=document.getElementById('contact-name').value.trim();
+        var email=document.getElementById('contact-email').value.trim();
+        var message=document.getElementById('contact-message').value.trim();
+        var subject='Project inquiry from '+name;
+        var body='Name: '+name+'\nEmail: '+email+'\n\nProject details:\n'+message;
+        window.location.href='mailto:johnjehl@gmail.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+      });
+    })();
+  </script>
+</body>
+</html>
